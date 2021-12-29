@@ -2,11 +2,11 @@
 
 **Integration test with Postman and Javascript for API used in comment process in Çiçeksepeti**
 
-**GET**  ```https://www.getpostman.com/collections/c0a484250e8d7efbafa0```
+**GET**  ``` https://www.getpostman.com/collections/b668e69a73698144c1ca```
 
 ## Step 1
 
-First step, we'll import the Postman collection into Postman.
+First step, we'll import the Postman collection and Postman environment into Postman.
 
 #### Instructions
 
@@ -16,7 +16,11 @@ First step, we'll import the Postman collection into Postman.
 
 - The file you are importing is inside of the ```postman_collection``` folder in this repo
 
-- After importing, you should have a collection called ```Ciceksepeti Bootcamp```
+- After importing, you should have a collection called ```Ciceksepeti Bootcamp API Test.postman_collection```
+
+- The file you are importing is inside of the ```postman_environment``` folder in this repo
+
+- After importing, you should have a collection called ```CicekSepeti Bootcamp.postman_environment```  
 
 ## Step 2
 
@@ -24,68 +28,72 @@ First step, we'll import the Postman collection into Postman.
 
 In this step, we will create a Postman test to fetching the return response on the city name value.
 
-- Click on the ```GET-Comment by City Name``` request
++ | Key | Value |
+  |-------|-------|
+  | cityName | ankara |
+    + Click on the ```cityName_ankara``` request
+    + Click on the ```Send``` button to see the returned data
+    + Create tests to check the returned ```cityName``` value
 
-- Click on the ```Send``` button to see the returned data
-
-- Create tests to check the returned ```cityName``` values
+![ankara](https://user-images.githubusercontent.com/55894683/147647870-681c36da-8609-4d68-82b0-82d4e40230b5.PNG)
 
 
-> **Create a test to the test fails when there are no 4 items in the returned response**
++ | Key | Value |
+  |-------|-------|
+  | cityName | istanbul |
+    + Click on the ```cityName_istanbul``` request
+    + Click on the ```Send``` button to see the returned data
+    + Create tests to check the returned ```cityName``` value
 
-```javascript
-const actualResponse = pm.response.json();
-const itemLength = actualResponse.item.length;
+![istanbul](https://user-images.githubusercontent.com/55894683/147648018-eb14d60f-2991-4fdc-8554-7aad7abc1fe9.PNG)
 
-pm.test("Response Control Item Size " ,() => {
-    if(itemLength !== 4){
-        console.log("TEST FAİLED");
-    }
-});
-```
++ | Key | Value |
+  |-------|-------|
+  | cityName | van |
+    + Click on the ```cityName_van``` request
+    + Click on the ```Send``` button to see the returned data
+    + Create tests to check the returned ```cityName``` value
 
-> **Create a test to verify the returned for Ankara and İstanbul list of comments**
+![van](https://user-images.githubusercontent.com/55894683/147648065-b53ddf40-57d7-4b92-9460-bca12b06af49.PNG)
 
-```javascript
-pm.test("Response Control for City Name Value: " + requestValue ,() => {
-if(requestKey==="cityName" && requestValue ==="ankara" || requestValue==="istanbul"){
-    pm.expect(responseKey).to.eql(requestKey);
-    pm.expect(responseValue).to.eql(requestValue); 
-    pm.expect(responseCode).to.eql(200);
-    pm.expect(responseBody).to.include("reviewDtos").to.include("comment");
-}
-});
-```
 
-> **Create a test to verify the returned for not found Van**
++ | Key | Value |
+  |-------|-------|
+  | cityName | null |
+    + Click on the ```cityName is null``` request
+    + Click on the ```Send``` button to see the returned data
+    + Create tests to check the returned ```cityName``` value
 
-```javascript
-pm.test("Response Control for City Name Value: " + requestValue ,() => {
-if(requestKey==="cityName" && requestValue ==="van"){
-    pm.expect(responseKey).to.eql(requestKey);
-    pm.expect(responseValue).to.eql(requestValue); 
-    pm.expect(responseStatus).to.eql("Not Found");
-    pm.expect(responseCode).to.eql(404);
-    pm.expect(responseBody).to.contain("Not Found");
-}
-});
-```
+![null](https://user-images.githubusercontent.com/55894683/147648112-d53ecd46-4275-44e9-a688-ee9cb1991e9b.PNG)
 
-> **Create a test to verify the returned null city name**
+## Step 3
 
-```javascript
-pm.test("Response Control for City Name Value: " + requestValue ,() => {
-if(requestKey==="cityName" && requestValue ===""){
-    pm.expect(responseKey).to.eql(requestKey);
-    pm.expect(responseValue).to.eql(requestValue); 
-    pm.expect(responseStatus).to.eql("Bad Request");
-    pm.expect(responseCode).to.eql(400);
-    pm.expect(responseBody).to.contain("'cityName' can not be null.");
-}
-});
-```
+Last step, we'll make reporting templates with Newman Command Line Runner in Postman
 
-![image](https://user-images.githubusercontent.com/55894683/147583625-c7a7ff0d-6f1c-4dc0-b01f-14fdc8ac4512.png)
+#### Instructions
+
+- Open CMD
+
+- Install newman ```$ npm install -g newman-reporter-html```
+
+- Run newman ```$ newman run [your collection path] -r html``` 
+
+if you have a collection environment, you can use  ```$ newman run [your collection path] -e [your environment path] -r html``` 
+
+![Ekran Alıntısı](https://user-images.githubusercontent.com/55894683/147651508-2731006d-372e-480a-aa8a-5e2b4877cef5.PNG)
+
+![Ekran Alıntısı1](https://user-images.githubusercontent.com/55894683/147651523-6aa07450-7b9e-4bbf-b650-23636976f5bc.PNG)
+
+![Ekran Alıntısı2](https://user-images.githubusercontent.com/55894683/147651532-42ba294c-e201-4d96-b7e8-81afb997a907.PNG)
+
+
+
+
+
+
+
+
+
 
 
 
